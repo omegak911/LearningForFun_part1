@@ -8,8 +8,8 @@ const router = express.Router();
 router
   // .use('/pokemon')
   .use('/auth', new graphqlHTTP({
-    userSchema,
-    // graphiql: true
+    schema: userSchema,
+    graphiql: true
   }));
 
 export default router;

@@ -1,6 +1,7 @@
-import { User } from '../collections/User';
+import User from '../collections/User';
 
 const createUser = ({ username, password }) => {
+  console.log(username, password)
   let user = new User({
     username,
     password
@@ -19,4 +20,4 @@ const validateUser = ({ username, password }) =>
     }
   })
 
-export default validateUser;
+export { createUser, validateUser };

@@ -8,7 +8,7 @@ import {
   GraphQLNonNull 
 } from 'graphql'
 
-import validateUser from '../../../database/helpers/UserHelper';
+import { createUser, validateUser } from '../../database/helpers/UserHelper';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -45,7 +45,7 @@ const Mutation = new GraphQLObjectType({
         password: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parent, args) {
-        return validateUser(args);
+        return createUser(args);
       }
     }
   }
