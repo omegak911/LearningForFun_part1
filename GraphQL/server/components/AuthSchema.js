@@ -25,11 +25,11 @@ const UserType = new GraphQLObjectType({
 const UserQueryType = new GraphQLObjectType({
   name: 'UserQuery',
   fields: {
-    user: {
+    login: {
       type: UserType,
       args: { username: { type: GraphQLString }, password: { type: GraphQLString }},
       resolve(parent, args) {
-        return validateUser(args)
+        return  validateUser(args);
       }
     }
   }
