@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./server/bin/entry.js",
+    "build": "webpack -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0"
   }
 }
