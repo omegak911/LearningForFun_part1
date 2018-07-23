@@ -7,54 +7,25 @@ import {
   GraphQLNonNull,
 } from 'graphql';
 
-import { addPokemon, findPokemon } from '../../database/helpers/PokemonCollectionHelper';
+import { UserType, PokemonType, UserPokemonType } from './Type';
+import { createUser, postValidateUser, validateUser } from '../../database/helpers/UserHelper';
+import { addPokemon, getPokemon } from '../../database/helpers/PokemonCollectionHelper';
 import { assignUserPokemon, seePokemonCaught } from '../../database/helpers/UserPokemonCollectionHelper';
-import { postValidateUser } from '../../database/helpers/UserHelper';
 
-const PokemonType = new GraphQLObjectType({
-  name: 'Pokemon',
-  fields: () => ({
-    id: { type: GraphQLID },
-    name: { type: GraphQLString },
-    type: { type: GraphQLString },
-    image: { type: GraphQLString },
-  })
-})
-
-const UserType = new GraphQLObjectType({
-  name: 'User',
-  fields: () => ({
-    id: { type: GraphQLID },
-    username: { type: GraphQLString },
-    pokemon: {
-      type: new GraphQLList(UserPokemonType),
-      resolve(parent, args) {
-        console.log(parent.id)
-        return seePokemonCaught({ userId: parent.id});
-      }
-    }
-  })
-})
-
-const UserPokemonType = new GraphQLObjectType({
-  name: 'UserPokemon',
-  fields: () => ({
-    userId: { type: GraphQLID },
-    id: { type: GraphQLID },
-    name: { type: GraphQLString },
-    type: { type: GraphQLString },
-    image: { type: GraphQLString },
-  })
-})
-
-const PokemonQueryType = new GraphQLObjectType({
-  name: 'PokemonQuery',
+const QueryType = new GraphQLObjectType({
+  name: 'query',
   fields: {
+    login: {
+      type: UserType,
+      args: { username: { type: GraphQLString }, password: { type: GraphQLString }},
+      resolve(parent, args) {
+        return validateUser(args);
+      }
+    },
     pokemon: {
-      type: PokemonType,
-      args: { id: { type: new GraphQLNonNull(GraphQLID) }},
+      type: new GraphQLList(PokemonType),
       resolve(parent, args){
-        return findPokemon(args);
+        return getPokemon();
       }
     },
     userPokemon: {
@@ -68,8 +39,18 @@ const PokemonQueryType = new GraphQLObjectType({
 })
 
 const Mutation = new GraphQLObjectType({
-  name: 'PokemonMutation',
+  name: 'mutation',
   fields: {
+    addUser: {
+      type: UserType,
+      args: { 
+        username: { type: new GraphQLNonNull(GraphQLString) }, 
+        password: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        return createUser(args);
+      }
+    },
     addPokemon: {
       type: PokemonType,
       args: { 
@@ -98,7 +79,8 @@ const Mutation = new GraphQLObjectType({
   }
 })
 
+
 export default new GraphQLSchema({
-  query: PokemonQueryType,
+  query: QueryType,
   mutation: Mutation
 })
