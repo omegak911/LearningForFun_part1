@@ -19,6 +19,18 @@ const PokemonType = new GraphQLObjectType({
   })
 })
 
+const PokemonQueryType = new GraphQLObjectType({
+  name: 'PokemonQuery',
+  fields: {
+    pokemon: {
+      type: PokemonType,
+      args: { id: { type: new GraphQLNonNull(GraphQLID) }},
+      resolve(parent, args){
+        return findPokemon(args);
+      }
+    }
+  }
+})
 
 const Mutation = new GraphQLObjectType({
   name: 'PokemonMutation',
