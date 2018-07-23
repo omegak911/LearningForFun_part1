@@ -10,7 +10,7 @@ const addPokemon = ({ id, name, type, image }) => {
   return pokemon.save();
 }
 
-const findPokemon = ({ id }) =>
-  PokemonCollection.findOne({ id });
+const getPokemon = () =>
+  PokemonCollection.find({});
 
-export { addPokemon, findPokemon };
+export { addPokemon, getPokemon };
