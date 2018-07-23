@@ -11,4 +11,7 @@ const createUser = ({ username, password }) => {
 const validateUser = ({ username, password }) =>
   User.findOne({ username, password })
 
-export { createUser, validateUser };
+const postValidateUser = ({ id }) =>
+  User.findById(id);
+
+export { createUser, validateUser, postValidateUser };

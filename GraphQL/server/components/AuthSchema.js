@@ -4,9 +4,8 @@ import {
   GraphQLSchema, 
   GraphQLString, 
   GraphQLList, 
-  GraphQLInt, 
   GraphQLNonNull 
-} from 'graphql'
+} from 'graphql';
 
 import { createUser, validateUser } from '../../database/helpers/UserHelper';
 
@@ -16,9 +15,6 @@ const UserType = new GraphQLObjectType({
     id: { type: GraphQLID },
     username: { type: GraphQLString },
     password: { type: GraphQLString },
-    // pokemons: {
-
-    // }
   })
 })
 
@@ -29,7 +25,7 @@ const UserQueryType = new GraphQLObjectType({
       type: UserType,
       args: { username: { type: GraphQLString }, password: { type: GraphQLString }},
       resolve(parent, args) {
-        return  validateUser(args);
+        return validateUser(args);
       }
     }
   }
