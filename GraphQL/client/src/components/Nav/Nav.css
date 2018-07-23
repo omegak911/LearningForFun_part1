@@ -1,0 +1,21 @@
+#nav {
+  height: 5vh;
+  width: 100vh;
+  background-color: black;
+  display: flex;
+}
+
+#nav .component {
+
+}
+
+#nav .logout {
+  
+}
+
+#nav .component,
+#nav .logout {
+  width: 5%;
+  height: 90%;
+  color: white;
+}

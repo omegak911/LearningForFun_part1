@@ -18,25 +18,49 @@ class App extends Component {
     }
   }
 
-  handleLogin = (username, password) => {
+  handleLogin = (value) => {
+    value.preventDefault();
+    if (value === 'signup') {
+      this.setState({ login: false, signup: true, currentPage: 'signup' })
+    } else {
+      let username = value.target[0].value;
+      let password = value.target[1].value;
 
+      //graphql server call
+      this.setState({ login: false, home: true, currentPage: 'home'})
+    }
+    value.target.reset();
   }
 
-  handleSignup = (username, password) => {
+  handleSignup = (value) => {
+    value.preventDefault();
+    if (value === 'login') {
+      this.setState({ login: true, signup: false, currentPage: 'login' })
+    } else {
+      let username = value.target[0].value;
+      let password = value.target[1].value;
 
+      //graphql server call
+      this.setState({ signup: false, home: true, currentPage: 'home'})
+    }
+    value.target.reset();
   }
 
   handleNav = (navigateTo) => {
     let { currentPage } = this.state;
-    this.setState({ [navigateTo]: true, [currentPage]: false, currentPage: navigateTo });
+    if (navigateTo === 'logout') {
+      this.setState({ [currentPage]: false, login: true })
+    } else {
+      this.setState({ [navigateTo]: true, [currentPage]: false, currentPage: navigateTo });
+    }
   }
 
   render() {
     let { login, signup, home, wild, currentPage } = this.state;
     return (
       <div>
-        {login && <Login />}
-        {signup && <Signup />}
+        {login && <Login handleLogin={this.handleLogin} />}
+        {signup && <Signup handleSignup={this.handleSignup} />}
         {!login && !signup && <Nav handleNav={this.handleNav}/>}
         {home && <Home />}
         {wild && <Wild />}
