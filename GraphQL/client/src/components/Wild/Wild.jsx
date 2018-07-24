@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { COPYFILE_FICLONE_FORCE } from 'constants';
 import { graphql, compose } from 'react-apollo';
 
-import { allPokemonQuery, catchPokemonMutation } from '../../queries/graphQLQueries';
+import { allPokemonQuery, catchPokemonMutation, loginQuery } from '../../queries/graphQLQueries';
 
 class Wild extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Wild extends Component {
   }
 
   catchIt = () => {
-    const { catchPokemonMutation, userId } = this.props;
+    const { catchPokemonMutation, userId, username, password } = this.props;
     let { pokemonInExistence, randomPokemon } = this.state;
     let { id, name, type, image } = randomPokemon;
     let chance = Math.floor(Math.random() * 11);
@@ -42,7 +42,8 @@ class Wild extends Component {
           name,
           type,
           image
-        }
+        },
+        refetchQueries: [{ query: loginQuery, variables: { username, password } }]
       })
       this.setState({ catchSuccess: true, randomPokemon: pokemonInExistence[randomIndex] })
     } else {

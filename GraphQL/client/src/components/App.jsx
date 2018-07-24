@@ -81,7 +81,7 @@ class App extends Component {
           {signup && <Signup handleSignup={this.handleSignup} />}
           {!login && !signup && <Nav handleNav={this.handleNav}/>}
           {home && <Home username={username} password={password} updateId={this.updateId}/>}
-          {wild && <Wild userId={id}/>}
+          {wild && <Wild username={username} password={password} userId={id}/>}
           {create && <CreatePokemon />}
         </ApolloProvider>
       </div>
