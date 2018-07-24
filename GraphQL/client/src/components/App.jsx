@@ -73,7 +73,7 @@ class App extends Component {
   }
 
   render() {
-    let { login, signup, home, wild, create, currentPage, username, password } = this.state;
+    let { login, signup, home, wild, create, currentPage, username, password, id } = this.state;
     return (
       <div>
         <ApolloProvider client={client}>
@@ -81,7 +81,7 @@ class App extends Component {
           {signup && <Signup handleSignup={this.handleSignup} />}
           {!login && !signup && <Nav handleNav={this.handleNav}/>}
           {home && <Home username={username} password={password} updateId={this.updateId}/>}
-          {wild && <Wild />}
+          {wild && <Wild userId={id}/>}
           {create && <CreatePokemon />}
         </ApolloProvider>
       </div>

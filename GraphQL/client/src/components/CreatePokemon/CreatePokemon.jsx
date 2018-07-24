@@ -27,8 +27,6 @@ class CreatePokemon extends Component {
         image
       }
     })
-    // console.log(this.props)
-
     e.target.reset();
   }
 
@@ -39,8 +37,7 @@ class CreatePokemon extends Component {
   render() {
     return (
       <div id="create">
-        {/* <img src="https://vignette.wikia.nocookie.net/pokemon/images/9/95/Charmander-GO.png/revision/latest?cb=20160809154953" /> */}
-        <form onChange={this.handleInput} onSubmit={this.createNewPokemon}>
+       <form onChange={this.handleInput} onSubmit={this.createNewPokemon}>
           <input name="id" placeholder="id"/>
           <input name="name" placeholder="name"/>
           <input name="type" placeholder="type"/>
