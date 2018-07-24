@@ -1,5 +1,4 @@
 import { gql } from 'apollo-boost';
-// import gql from 'graphql-tag';
 
 const loginQuery = gql`
 query($username: String!, $password: String!){
@@ -36,6 +35,17 @@ mutation($id: ID!, $name: String!, $type: String!, $image: String!) {
 }
 `
 
+const catchPokemonMutation = gql`
+mutation($userId: ID!, $id: ID!, $name: String!, $type: String!, $image: String!) {
+  catchPokemon(userId: $userId, id: $id, name: $name, type: $type, image: $image) {
+    id
+    name
+    type
+    image
+  }
+}
+`
+
 const allPokemonQuery = gql`
 {
   pokemon {
@@ -49,4 +59,4 @@ const allPokemonQuery = gql`
 
 // export { loginQuery, signupMutation, allPokemonQuery };
 
-export { loginQuery, allPokemonQuery, createPokemonMutation };
+export { loginQuery, allPokemonQuery, createPokemonMutation, catchPokemonMutation };

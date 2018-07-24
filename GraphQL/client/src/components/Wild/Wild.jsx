@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { COPYFILE_FICLONE_FORCE } from 'constants';
+import { graphql, compose } from 'react-apollo';
 
-import { allPokemonQuery } from '../../queries/graphQLQueries';
+import { allPokemonQuery, catchPokemonMutation } from '../../queries/graphQLQueries';
 
 class Wild extends Component {
   constructor(props) {
@@ -9,12 +10,14 @@ class Wild extends Component {
     this.state = {
       pokemonInExistence: [],
       randomPokemon: null,
+      catchFailed: false,
+      catchSuccess: false,
     }
   }
 
   handlePokemonCollection = () => {
-    if (!this.props.data.loading && !this.state.randomPokemon) {
-      const { pokemon } = this.props.data;
+    if (!this.props.allPokemonQuery.loading && !this.state.randomPokemon) {
+      const { pokemon } = this.props.allPokemonQuery;
       let randomIndex = Math.floor(Math.random() * pokemon.length);
   
       this.setState({
@@ -24,13 +27,42 @@ class Wild extends Component {
     }
   }
 
+  catchIt = () => {
+    const { catchPokemonMutation, userId } = this.props;
+    let { pokemonInExistence, randomPokemon } = this.state;
+    let { id, name, type, image } = randomPokemon;
+    let chance = Math.floor(Math.random() * 11);
+    const context = this;
+    let randomIndex = Math.floor(Math.random() * pokemonInExistence.length);
+    if (chance > 6) {
+      catchPokemonMutation({
+        variables: {
+          userId,
+          id,
+          name,
+          type,
+          image
+        }
+      })
+      this.setState({ catchSuccess: true, randomPokemon: pokemonInExistence[randomIndex] })
+    } else {
+      this.setState({ catchFailed: true, randomPokemon: pokemonInExistence[randomIndex] });
+      
+      setTimeout(() => {
+        context.setState({ catchSuccess: false, catchFailed: false })
+      }, 5000);
+    }
+  }
+
   render() {
-    let { data } = this.props;
-    let { randomPokemon } = this.state;
+    let { allPokemonQuery } = this.props;
+    let { randomPokemon, catchFailed, catchSuccess } = this.state;
     return (
       <div>
-        {data.loading && <div>LOADING</div>}
+        {allPokemonQuery.loading && <div>LOADING</div>}
         {this.handlePokemonCollection()}
+        {catchSuccess && <div>You caught it!</div>}
+        {catchFailed && <div>It ran away!  Better luck next time</div>}
         {randomPokemon &&
           <div>
             <img src={randomPokemon.image} />
@@ -39,9 +71,13 @@ class Wild extends Component {
             <p>Type: {randomPokemon.type}</p>
           </div>
         }
+        <button onClick={this.catchIt}>Catch!!</button>
       </div>
     )
   }
 }
 
-export default graphql(allPokemonQuery)(Wild);
+export default compose(
+  graphql(allPokemonQuery, { name: 'allPokemonQuery' }),
+  graphql(catchPokemonMutation, { name: 'catchPokemonMutation' })
+)(Wild);
