@@ -18,7 +18,6 @@ const UserType = new GraphQLObjectType({
     pokemon: {
       type: new GraphQLList(UserPokemonType),
       resolve(parent, args) {
-        console.log(parent.id)
         return seePokemonCaught({ userId: parent.id});
       }
     }

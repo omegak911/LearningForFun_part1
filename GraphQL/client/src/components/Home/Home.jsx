@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo'
+import { graphql, compose, withApollo } from 'react-apollo'
 
 import { loginQuery } from '../../queries/graphQLQueries';
 
@@ -13,7 +13,7 @@ class Home extends Component {
   }
 
   handleData = () => {
-    let { data } = this.props
+    let { data } = this.props;
     if (!data.loading && !this.state.updatedId) {
       this.setState({ updatedId: true, caught: data.login.pokemon });
       this.props.updateId(data.login.id);
@@ -24,9 +24,8 @@ class Home extends Component {
     let { caught } = this.state;
     return (
       <div>
-        hello from Home
         {this.handleData()}
-        {caught.length > 0 && caught.map(pokemon => <div key={pokemon.id}>{pokemon.name}</div>)}
+        {caught.length > 0 && caught.map((pokemon,i) => <div key={i}>{pokemon.name}</div>)}
       </div>
     )
   }
