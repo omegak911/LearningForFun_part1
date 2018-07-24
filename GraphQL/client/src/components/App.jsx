@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider, graphql, compose } from 'react-apollo';
 
 import Login from '../components/Landing/Login';
 import Signup from '../components/Landing/Signup';
 import Home from '../components/Home/Home';
 import Nav from '../components/Nav/Nav';
 import Wild from '../components/Wild/Wild';
+import CreatePokemon from '../components/CreatePokemon/CreatePokemon';
+
+// import { loginQuery, signupMutation } from '../queries/graphQLQueries';
+
+const client = new ApolloClient({
+  url: 'http://localhost:3000/graphql'
+})
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +23,7 @@ class App extends Component {
       signup: false,
       home: false,
       wild: false,
+      create: false,
       currentPage: 'login',
     }
   }
@@ -56,17 +66,24 @@ class App extends Component {
   }
 
   render() {
-    let { login, signup, home, wild, currentPage } = this.state;
+    let { login, signup, home, wild, create, currentPage } = this.state;
     return (
       <div>
-        {login && <Login handleLogin={this.handleLogin} />}
-        {signup && <Signup handleSignup={this.handleSignup} />}
-        {!login && !signup && <Nav handleNav={this.handleNav}/>}
-        {home && <Home />}
-        {wild && <Wild />}
+        <ApolloProvider client={client}>
+          {login && <Login handleLogin={this.handleLogin} />}
+          {signup && <Signup handleSignup={this.handleSignup} />}
+          {!login && !signup && <Nav handleNav={this.handleNav}/>}
+          {home && <Home />}
+          {wild && <Wild />}
+          {create && <CreatePokemon />}
+        </ApolloProvider>
       </div>
     )
   }
 }
 
+// export default compose(
+//   graphql(loginQuery, { name: "loginQuery" }),
+//   graphql(signupMutation, { name: "signupMutation" }))
+//   (App);
 export default App;

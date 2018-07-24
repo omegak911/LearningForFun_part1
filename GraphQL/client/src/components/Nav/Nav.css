@@ -15,8 +15,8 @@
 
 #nav .component,
 #nav .logout {
-
-  width: 5%;
+  min-width: 8%;
   height: 90%;
   color: white;
+  text-align: center;
 }
