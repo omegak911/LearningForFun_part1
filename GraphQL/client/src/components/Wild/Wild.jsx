@@ -7,29 +7,37 @@ class Wild extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      pokemonInExistence: [],
+      randomPokemon: null,
     }
   }
 
-  componentDidMount() {
-    console.log(this.props.allPokemonQuery)
+  handlePokemonCollection = () => {
+    if (!this.props.data.loading && !this.state.randomPokemon) {
+      const { pokemon } = this.props.data;
+      let randomIndex = Math.floor(Math.random() * pokemon.length);
+  
+      this.setState({
+        pokemonInExistence: pokemon,
+        randomPokemon: pokemon[randomIndex]
+      })
+    }
   }
 
   render() {
-    let { data } = this.props
+    let { data } = this.props;
+    let { randomPokemon } = this.state;
     return (
       <div>
-        {data.loading ? 
-          <div>LOADING</div> 
-          : 
-          <div>{data.pokemon.map(poke =>
-            <div key={poke.id} index={poke.id}>
-              <img src={poke.image} />
-              <p>Id: {poke.id}</p>
-              <p>Name: {poke.name}</p>
-              <p>Type: {poke.type}</p>
-            </div>
-          )}</div>
+        {data.loading && <div>LOADING</div>}
+        {this.handlePokemonCollection()}
+        {randomPokemon &&
+          <div>
+            <img src={randomPokemon.image} />
+            <p>Id: {randomPokemon.id}</p>
+            <p>Name: {randomPokemon.name}</p>
+            <p>Type: {randomPokemon.type}</p>
+          </div>
         }
       </div>
     )
