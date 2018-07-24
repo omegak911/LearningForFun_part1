@@ -25,6 +25,9 @@ class App extends Component {
       wild: false,
       create: false,
       currentPage: 'login',
+      id: null,
+      username: null,
+      password: null,
     }
   }
 
@@ -37,7 +40,7 @@ class App extends Component {
       let password = value.target[1].value;
 
       //graphql server call
-      this.setState({ login: false, home: true, currentPage: 'home'})
+      this.setState({ login: false, home: true, currentPage: 'home', username, password })
     }
     value.target.reset();
   }
@@ -65,15 +68,19 @@ class App extends Component {
     }
   }
 
+  updateId = (id) => {
+    this.setState({ id })
+  }
+
   render() {
-    let { login, signup, home, wild, create, currentPage } = this.state;
+    let { login, signup, home, wild, create, currentPage, username, password } = this.state;
     return (
       <div>
         <ApolloProvider client={client}>
           {login && <Login handleLogin={this.handleLogin} />}
           {signup && <Signup handleSignup={this.handleSignup} />}
           {!login && !signup && <Nav handleNav={this.handleNav}/>}
-          {home && <Home />}
+          {home && <Home username={username} password={password} updateId={this.updateId}/>}
           {wild && <Wild />}
           {create && <CreatePokemon />}
         </ApolloProvider>
