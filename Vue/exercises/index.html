@@ -30,7 +30,7 @@
     <div> {{ message }} </div>
     <br />
     <hr>
-    <br />
+    <br /> -->
 
     <div>
       <span v-for="pokemon in listItems">
@@ -43,16 +43,16 @@
         <span v-if="checked.length > 0">Caught: 
           <ul>
             <li v-for="pokemon in checked">
-              <button @click="pokemon.caught += 1">+</button>
-              <button @click="pokemon.caught > 0 ? pokemon.caught -= 1 : 0">-</button>
+              <button @click="pokemon.caught += 1; increment()">+</button>
+              <button @click="pokemon.caught > 0 ? decrement() : ''; pokemon.caught > 0 ? pokemon.caught -= 1 : 0">-</button>
               {{ pokemon.name }} : {{ pokemon.caught }}
             </li>
           </ul>
+          Total: {{ counter }}
         </span>
         <span v-else=>You have not checked any pokemon</span>
       </div>
-    </div> -->
-
+    </div> 
 
     <!-- exercise: create a calculator -->
     <div id="calculator">
@@ -71,6 +71,14 @@
       </select>
       <span v-if="selectedOption">You chose {{ selectedOption }}</span>
     </div>
+
+    <!-- exercise: create a simple tic-tac-toe game using methods -->
+    <br />
+    <span>Tic Tac Toe</span>
+    <div class="gameRow" v-for="(row,index) in gameMatrix">
+      <div class="square" :name="[index,idx]" v-for="(square,idx) in row" @click="handleClick">{{ square }}</div>
+    </div>
+    <span v-if="winner">The winner is: {{ winner }}!</span>
 
   </div>
     

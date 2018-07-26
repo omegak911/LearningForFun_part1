@@ -15,10 +15,96 @@ const app = new Vue({
         { name: 'Blastoise', caught: 0 },
       ],
       // message: 'This is what you would normally see',
-      // checked: []
+      checked: [],
       firstNum: 1,
       secondNum: 1,
-      selectedOption: ''
+      selectedOption: '',
+      counter: 0,
+      gameMatrix: [
+        [' ', ' ', ' '],
+        [' ', ' ', ' '],
+        [' ', ' ', ' '],
+      ],
+      sign: 'X',
+      numberOfMoves: 0,
+      winner: null,
+    }
+  },
+  methods: {
+    increment() {
+      this.counter++
+    },
+    decrement() {
+      this.counter--
+    },
+    checkWinner() {
+      let tictactoe = null;
+
+      const checkHorizontal = (row, column) => {
+        if (this.gameMatrix[row][column] === this.gameMatrix[row][column + 1] &&
+          this.gameMatrix[row][column] === this.gameMatrix[row][column + 2]) {
+            tictactoe = this.gameMatrix[row][column]
+          }
+      }
+      const checkVertical = (row, column) => {
+        if (this.gameMatrix[row][column] === this.gameMatrix[row + 1][column] &&
+          this.gameMatrix[row][column] === this.gameMatrix[row + 2][column] ) {
+            tictactoe = this.gameMatrix[row][column]
+          }
+      }
+      const checkDiagonal = (row, column) => {
+        if (column === 0) {
+          if (this.gameMatrix[row][column] === this.gameMatrix[row + 1][column + 1] &&
+            this.gameMatrix[row][column] === this.gameMatrix[row + 2][column + 2]) {
+              tictactoe = this.gameMatrix[row][column]
+            } 
+        } else {
+          if (this.gameMatrix[row][column] === this.gameMatrix[row + 1][column - 1] &&
+          this.gameMatrix[row][column] === this.gameMatrix[row + 2][column - 2]) {
+            tictactoe = this.gameMatrix[row][column]
+          }
+        }
+      }
+
+      for (let row = 0; row < 3; row++) {
+        for (let column = 0; column < 3; column++) {
+          let currentVal = this.gameMatrix[row][column];
+          if (currentVal !== ' ') {
+            if (column === 0) {
+              checkHorizontal(row, column)
+            }
+            if (row === 0) {
+              checkVertical(row, column)
+            }
+  
+            if (row === 0 && column === 0 || row === 0 && column === 2) {
+              checkDiagonal(row, column)
+            }
+            if (tictactoe) {
+              return tictactoe;
+            }
+          }
+        } 
+      }
+      return false;
+    },
+    handleClick(coordinate) {
+      if (!this.winner && coordinate.target.innerHTML === ' ') {
+        let { value } = coordinate.target.attributes.name;
+        let [row, comma, column] = value;
+
+        this.gameMatrix[row][column] = this.sign;
+        coordinate.target.innerHTML = this.sign;
+        this.sign = this.sign === 'X' ? 'O' : 'X';
+
+        this.numberOfMoves++;
+        if (this.numberOfMoves > 4) {
+          let result = this.checkWinner();
+          if (result) {
+            this.winner = result;
+          }
+        }
+      }
     }
   }
 });
