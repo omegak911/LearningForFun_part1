@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root">
+    {{ text }}
+    <br />
+    Here's my pokemon
+    <ul>
+      <li v-for="pokemon in listItems">
+        {{ pokemon.name }}
+      </li>
+    </ul>
+    <br />
+    Here's some numbers
+    <ul>
+      <li v-for="num in 5">
+        {{ num }}
+      </li>
+    </ul>
+    <br />
+    <textarea v-model="message"></textarea>
+    <br>
+    <div> {{ message }} </div>
+    <br />
+    <hr>
+    <br />
+
+    <div>
+      <span v-for="pokemon in listItems">
+        <input type="checkbox" :id="pokemon.name" :value="pokemon" v-model="checked">
+        {{ pokemon.name }} 
+        <br />
+      </span>
+      <div :class="checked.length > 0 ? 'yes' : 'no'">here</div>
+      <div v-if="checked">
+        <span v-if="checked.length > 0">Caught: 
+          <ul>
+            <li v-for="pokemon in checked">
+              <button @click="pokemon.caught += 1">+</button>
+              <button @click="pokemon.caught > 0 ? pokemon.caught -= 1 : 0">-</button>
+              {{ pokemon.name }} : {{ pokemon.caught }}
+            </li>
+          </ul>
+        </span>
+        <span v-else=>You have not checked any pokemon</span>
+      </div>
+    </div>
+
+
+    <!-- exercise: create a calculator -->
+    <!-- exercise: create a select tag with options and render string based on selection -->
+
+
+  </div>
+    
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="index.jsx">
+  </script>
+</body>
+</html>
