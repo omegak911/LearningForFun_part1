@@ -65,7 +65,12 @@
 
 
     <!-- exercise: create a select tag with options and render string based on selection -->
-
+    <div>
+      <select name="" id="" v-model="selectedOption">
+        <option v-for="pokemon in listItems">{{ pokemon.name }}</option>
+      </select>
+      <span v-if="selectedOption">You chose {{ selectedOption }}</span>
+    </div>
 
   </div>
     
