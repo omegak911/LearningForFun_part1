@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="index.css">
   <title>Document</title>
 </head>
 <body>
   <div id="root">
-    {{ text }}
+    <!-- {{ text }}
     <br />
     Here's my pokemon
     <ul>
@@ -50,17 +51,25 @@
         </span>
         <span v-else=>You have not checked any pokemon</span>
       </div>
-    </div>
+    </div> -->
 
 
     <!-- exercise: create a calculator -->
+    <div id="calculator">
+      <input v-model.number="firstNum" value="firstNum">
+      <span>+</span>
+      <input v-model.number="secondNum" value="secondNum">
+      <span>=</span>
+      <span type="number">{{ firstNum + secondNum }}</span>
+    </div>
+
+
     <!-- exercise: create a select tag with options and render string based on selection -->
 
 
   </div>
     
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="index.jsx">
-  </script>
+  <script src="index.jsx"></script>
 </body>
 </html>
