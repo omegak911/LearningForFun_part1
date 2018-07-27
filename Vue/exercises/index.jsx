@@ -28,9 +28,18 @@ const app = new Vue({
       sign: 'X',
       numberOfMoves: 0,
       winner: null,
+      blogLabels: ['Math', 'English', 'Science', 'History'],
+      blogPosts: [],
+      filter: '',
     }
   },
   methods: {
+    least() {
+      this.checked.sort((a,b) => a.caught-b.caught);
+    },
+    most() {
+      this.checked.sort((a,b) => b.caught-a.caught);
+    },
     increment() {
       this.counter++
     },
@@ -105,6 +114,19 @@ const app = new Vue({
           }
         }
       }
+    },
+    handleBlogSubmit(e) {
+      let title = e.target[0].value;
+      let author = e.target[1].value;
+      let label = e.target[2].value;
+      
+      this.blogPosts.push({ title, author, label })
+      e.target.reset();
+    }
+  },
+  computed: {
+    filteredBlogs() {
+      return this.blogPosts.filter(post => post.label.match(this.filter))
     }
   }
 });

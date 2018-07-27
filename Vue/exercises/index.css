@@ -7,10 +7,93 @@
   border: 1px solid black;
   height: 20px;
   width: 20px;
+}
+.gameRow {
+  display: flex;
+}
+  
+#blog {
+  width: 100%;
+  height: 90vh;
+}
+
+#blog,
+.square,
+.addPost,
+.blogRight {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.gameRow {
+
+#blog,
+.addPost,
+.blogs {
+  flex-direction: column;
+}
+
+.addPost {
+  width: 70%;
+  height: 20%;
+  background-color: grey;
+  color: white;
+}
+
+.addPost select,
+.addPost button,
+.blogs select {
+  width: 100%;
+  text-align: center;
+}
+
+.addPost button {
+  background-color: black;
+  color: white
+}
+
+.blogs {
+  width: 70%;
+  height: 70%;
   display: flex;
+  align-items: center;
+}
+
+.blogList {
+  width: 100%;
+  display: flex;
+  background-color: #CECECE;
+  height: 20%;
+  margin-bottom: 5px;
+}
+
+.blogLeft {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.blogRight {
+  width: 20%;
+}
+
+.blogRight div {
+  border: 1px solid grey;
+  background-color: white;
+  color: grey;
+  padding: 5px;
+}
+
+.blogLeft div {
+  margin-left: 5%;
+}
+
+.blogTitle {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.blogAuthor {
+  color: grey;
+  font-weight: bold;
 }

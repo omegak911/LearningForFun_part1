@@ -41,6 +41,8 @@
       <div :class="checked.length > 0 ? 'yes' : 'no'">here</div>
       <div v-if="checked">
         <span v-if="checked.length > 0">Caught: 
+          <button @click="most" >Order By Most Caught</button>
+          <button @click="least" >Order By Least Caught</button>
           <ul>
             <li v-for="pokemon in checked">
               <button @click="pokemon.caught += 1; increment()">+</button>
@@ -79,6 +81,42 @@
       <div class="square" :name="[index,idx]" v-for="(square,idx) in row" @click="handleClick">{{ square }}</div>
     </div>
     <span v-if="winner">The winner is: {{ winner }}!</span>
+
+    <!-- exercise: create a blog post filtering app using computed data -->
+    <br />
+    <div id="blog">
+      <span>Blog Posts</span>
+      <div class="addPost">
+        <span>Add a Post</span>
+        <form @submit.prevent="handleBlogSubmit">
+          <input name="title" type="text" placeholder="title">
+          <input name="author" type="text" placeholder="author">
+          <div>
+            <select>
+              <option name="defaultLabel" value="">All Labels</option>
+              <option name="label" v-for="label in blogLabels">{{ label }}</option>
+            </select>
+          </div>
+          <button type="submit">Blog It</button>
+        </form>
+      </div>
+      <div class="blogs">
+        <select v-model="filter">
+          <option value="">All Labels</option>
+          <option v-for="label in blogLabels">{{ label }}</option>
+        </select>
+        <div v-if="filteredBlogs.length > 0" class="blogList" v-for="blog in filteredBlogs">
+          <div class="blogLeft">
+            <div class="blogTitle">{{ blog.title }}</div>
+            <div class="blogAuthor">{{ blog.author }}</div>
+          </div>
+          <div class="blogRight">
+            <div>{{ blog.label }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
     
