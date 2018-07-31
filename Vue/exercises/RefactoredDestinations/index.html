@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Destinations</title>
+</head>
+<body>
+  <div id="app">
+    <h1>Your Upcoming Destinations</h1>
+    <div class="location-contain">
+        <div class="locations" v-for="location in locations">
+            <place :img="location.img" :desc="location.desc">
+              <h2>{{ location.name }}</h2>
+            </place>
+
+          <!-- <img :src="location.img" alt="img" width="235" height="300">
+          <h2>{{ location.name }}</h2>
+          <p>{{ location.desc }}</p> -->
+        </div>
+    </div>
+  </div>
+
+  <script type="text/x-template" id="place">
+    <div class="place">
+      <img :src="img" width="235" height="300" alt="">
+      <slot></slot>
+      <p>{{ desc }}</p>
+    </div>
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="index.jsx"></script>
+  <style>
+    #app {
+      height: 100vh;
+      width: 100%;
+      background-color: lightgray;
+    }
+
+    #app,
+    .locations {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .location-contain {
+      display: flex;
+      width: 80%;
+      overflow: scroll;
+    }
+
+    .locations {
+      padding: 10px;
+      width: 40%;
+      background-color: white;
+    }
+
+
+  </style>
+</body>
+</html>
