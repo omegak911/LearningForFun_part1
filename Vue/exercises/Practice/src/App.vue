@@ -1,30 +1,79 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <div id="pokemonList">
+      <div class="pokemonListItem" v-for="poke in pokemon">
+        <img :src="poke.img" alt="pokemonImage" />
+        <p>ID: {{ poke.id }}</p>
+        <p>Name: {{ poke.name }}</p>
+        <p>Type: {{ poke.type }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import images from '../config.js';
+
 export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      pokemon: [
+        {
+          id: 1,
+          name: "Bulbasaur",
+          type: "Grass/Poison",
+          img: images.bulbasaur,
+        },    
+        {
+          id: 2,
+          name: "Ivysaur",
+          type: "Grass/Poison",
+          img: images.ivysaur,
+        },  
+        {
+          id: 3,
+          name: "Venusaur",
+          type: "Grass/Poison",
+          img: images.venusaur,
+        }, 
+        {
+          id: 4,
+          name: "Charmander",
+          type: "Fire",
+          img: images.charmander
+        },
+        {
+          id: 5,
+          name: "Charmeleon",
+          type: "Fire",
+          img: images.charmeleon,
+        },
+        {
+          id: 6,
+          name: "Charizard",
+          type: "Fire",
+          img: images.charizard,
+        },
+        {
+          id: 7,
+          name: "Squirtle",
+          type: "Water",
+          img: images.squirtle,
+        }, 
+        {
+          id: 8,
+          name: "Wartortle",
+          type: "Water",
+          img: images.wartortle,
+        }, 
+        {
+          id: 9,
+          name: "Blastoise",
+          type: "Water",
+          img: images.blastoise,
+        }, 
+      ]
     }
   }
 }
@@ -44,17 +93,37 @@ h1, h2 {
   font-weight: normal;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+#app,
+#pokemonList,
+.pokemonListItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
+#pokemonList {
+  background-color: lightblue;
+  height: 90vh;
+  width: 90%;
+  flex-wrap: wrap;
+  overflow: scroll;
 }
 
-a {
-  color: #42b983;
+.pokemonListItem {
+  border: 1px solid black;
+  background-color: white;
+  flex-direction: column;
+  margin: 5px;
 }
+
+.pokemonListItem p {
+  margin: 0;
+}
+
+.pokemonListItem img {
+  width: 80%;
+}
+
+
+
 </style>
