@@ -2,10 +2,7 @@
   <div id="app">
     <div id="pokemonList">
       <div class="pokemonListItem" v-for="poke in pokemon">
-        <img :src="poke.img" alt="pokemonImage" />
-        <p>ID: {{ poke.id }}</p>
-        <p>Name: {{ poke.name }}</p>
-        <p>Type: {{ poke.type }}</p>
+        <pokemon-list-item :img="poke.img" :name="poke.name" :type="poke.type" :id="poke.id"></pokemon-list-item>
       </div>
     </div>
   </div>
@@ -13,8 +10,12 @@
 
 <script>
 import images from '../config.js';
+import PokemonListItem from './components/PokemonListItem.vue';
 
 export default {
+  components: {
+    PokemonListItem
+  },
   name: 'app',
   data () {
     return {
@@ -110,7 +111,7 @@ h1, h2 {
 }
 
 .pokemonListItem {
-  border: 1px solid black;
+  border: 3px solid black;
   background-color: white;
   flex-direction: column;
   margin: 5px;
