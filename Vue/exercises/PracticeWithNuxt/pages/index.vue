@@ -90,6 +90,14 @@ export default {
   margin-top: 60px;
 }
 
+.page-enter-active, .page-leave-active {
+  transition: opacity 1s;
+}
+
+.page-enter, .page-leave-to {
+  opacity: 0;
+}
+
 h1, h2 {
   font-weight: normal;
 }

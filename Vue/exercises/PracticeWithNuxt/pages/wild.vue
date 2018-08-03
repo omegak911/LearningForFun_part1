@@ -11,18 +11,26 @@
         </pokemon-list-item>
       </div>
     </transition>
-    <transition name="ballmove"
-      enter-active-class="bouncein"
-      leave-active-class="rollout"
+    <transition
+      name="fade"
+      mode="out-in"
       >
-      <div v-if="attemptCapture">
-        <div class="ball">
-          <div class="innerBall">
-            <div class="ballLine">
+        <div key="attemptCapture" v-if="attemptCapture" @click="changeCapture">
+          <div class="ball">
+            <div class="innerBall">
+              <div class="ballLine">
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div key="attemptCapture2" v-if="attemptCapture2" @click="changeCapture">
+          <div class="ball red">
+            <div class="innerBall">
+              <div class="ballLine">
+              </div>
+            </div>
+          </div>
+        </div>
     </transition>
   </div>
 </template>
@@ -40,20 +48,24 @@ export default {
       text: "Hello from Wild",
       show: false,
       attemptCapture: false,
+      attemptCapture2: false,
       tempPokemon: {
         id: 1,
         name: "Bulbasaur",
         type: "Grass/Poison",
         img: images.bulbasaur,
-      },  
-
+      },
     }
   },
   methods: {
     catchPokemon() {
       this.show = false;
-      setTimeout(() => this.attemptCapture = true, 1000);
-    }
+      this.attemptCapture = !this.attemptCapture;
+    },
+    changeCapture() {
+      this.attemptCapture = !this.attemptCapture;
+      this.attemptCapture2 = !this.attemptCapture2;
+    },
   }
 }
 </script>
@@ -75,14 +87,23 @@ export default {
     flex-direction: column;
   }
 
-  .ball {
+  .ball,
+  .ballRed {
     width: 100px;
     height: 100px;
-    background-color: blue;
     border-radius: 100%;
     animation: bouncein 0.4s cubic-bezier(.5,0.05,1,.5);
     animation-direction: alternate;
     animation-iteration-count: infinite;
+  }
+
+  .ball {
+    background-color: blue;
+    transition: opacity 
+  }
+
+  .red {
+    background-color: red;
   }
 
   .innerBall {
@@ -94,6 +115,7 @@ export default {
   }
 
   .ball,
+  .red,
   .innerBall {
     display: flex;
     justify-content: center;
