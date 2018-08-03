@@ -13,12 +13,10 @@
 </template>
 
 <script>
+  import toggle from './Mixins.vue';
+
   export default {
-    data() {
-      return {
-        caught: 0
-      }
-    },
+    mixins: [toggle],
     props: ["img", "id", "name", "type"],
   }
 </script>
